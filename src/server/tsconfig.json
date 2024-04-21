@@ -1,6 +1,5 @@
 {
     "extends": "../../tsconfig.json",
-    "target": "es2022",
     "compilerOptions": {
         "outDir": "../../dist",
         "rootDir": ".",

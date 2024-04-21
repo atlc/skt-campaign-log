@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Login from "./views/Login";
+import Profile from "./views/Profile";
 
 const App = () => {
     return (
@@ -9,8 +11,8 @@ const App = () => {
             <main>
                 <Routes>
                     <Route path="/" element={<h1>Home</h1>} />
-                    <Route path="/profile" element={<h1 style={{ height: "2000px" }}>Profile</h1>} />
-                    <Route path="/login" element={<h1>Login/Register</h1>} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="*" element={<h1 className="text-red">Ruh Roh</h1>} />
                 </Routes>
             </main>

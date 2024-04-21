@@ -4,6 +4,14 @@ import { v4 } from "uuid";
 
 const users = client.db("Logs").collection("users");
 
+async function find({ email }: { email: string }) {
+    return await users.findOne<UsersModel.User>({ email });
+}
+
+async function profile({ id }: { id: string }) {
+    return await users.findOne<UsersModel.User>({ id }, { projection: { password: 0 } });
+}
+
 async function register(new_user: UsersModel.BaseUser) {
     const id = v4();
     const created_at = new Date().toISOString();
@@ -11,11 +19,8 @@ async function register(new_user: UsersModel.BaseUser) {
     return { ...results, id };
 }
 
-async function find({ email }: { email: string }) {
-    return await users.findOne<UsersModel.User>({ email });
-}
-
 export default {
     find,
+    profile,
     register,
 };

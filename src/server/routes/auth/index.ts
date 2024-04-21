@@ -16,7 +16,7 @@ router.post("/login", validate_login, async (req, res) => {
     const token = tokens.sign(payload);
 
     res.status(200).json({
-        message: "It seems your login credentials were not in the forgotten realms - you successfully logged in.",
+        message: "It seems your login credentials were *not* in the forgotten realms - you successfully logged in.",
         title: random_messages.success(),
         token,
     });
@@ -40,6 +40,18 @@ router.post("/register", validate_registration_data, async (req, res, next) => {
         const token = tokens.sign(payload);
 
         return res.status(201).json({ message: "Your character was successfully registered", title: `${random_messages.success()}`, token });
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get("/profile", validate_token, async (req, res, next) => {
+    const { id } = req.user;
+    try {
+        const profile = await db.users.profile({ id });
+        if (!profile) return res.status(401).json({ message: `Unable to find your profile - please try logging in again`, title: random_messages.error() });
+
+        res.json(profile);
     } catch (error) {
         next(error);
     }
