@@ -42,11 +42,38 @@ async function fetcher<T = any>(url: string, method: ValidMethods = "GET", rawDa
                 }
             } else {
                 console.error(data);
-                Swal.fire({
-                    icon: "error",
-                    title: data.title || "Nat 1!",
-                    text: data.message,
-                });
+                if (res.status === 500) {
+                    Swal.fire({
+                        icon: "error",
+                        title: data.title || "Nat 1!",
+                        text: data.message,
+                        confirmButtonText: "Copy",
+                        showDenyButton: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const error = JSON.stringify(data.error);
+
+                            const textarea = document.createElement("textarea");
+                            textarea.value = error;
+                            textarea.style.position = "fixed";
+                            textarea.style.opacity = "0";
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand("copy");
+                            document.body.removeChild(textarea);
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: data.title || "Nat 1!",
+                        text: data.message,
+                    });
+                }
+
+                if (res.status === 401) {
+                    window.location.href = "/login";
+                }
             }
         } catch (error) {
             console.error(error);

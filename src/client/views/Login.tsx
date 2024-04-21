@@ -18,13 +18,13 @@ interface UpdateableFormItem extends FormItem {
 }
 
 const Login = () => {
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
     const nav = useNavigate();
 
     const [name, setName] = useState<FormItem>({
         name: "name",
         label: "Name",
-        required: !isLogin,
+        required: true,
         type: "text",
         value: "",
         display_only_on_register: true,
@@ -146,7 +146,7 @@ const Login = () => {
 
                     {!isLogin && (
                         <div>
-                            <label>Name:{name.required && <span className="text-red bold">*</span>}</label>
+                            <label>Name:{name.required && <span className="text-red bold large">*</span>}</label>
                             <input
                                 type={name.type}
                                 name={name.name}
@@ -156,7 +156,7 @@ const Login = () => {
                         </div>
                     )}
                     <div>
-                        <label>Email:{email.required && <span className="text-red bold">*</span>}</label>
+                        <label>Email:{email.required && <span className="text-red bold large">*</span>}</label>
                         <input
                             type={email.type}
                             name={email.name}
@@ -165,7 +165,7 @@ const Login = () => {
                         />
                     </div>
                     <div>
-                        <label>Password:{password.required && <span className="text-red bold">*</span>}</label>
+                        <label>Password:{password.required && <span className="text-red bold large">*</span>}</label>
                         <input
                             type={password.type}
                             name={password.name}
@@ -181,7 +181,7 @@ const Login = () => {
                                 {character_image_url.value && <img style={{ width: "25%" }} src={character_image_url.value} />}
                             </div>
                             <div>
-                                <label>Character's Name:{character_name.required && <span className="text-red bold">*</span>}</label>
+                                <label>Character's Name:{character_name.required && <span className="text-red bold large">*</span>}</label>
                                 <input
                                     type={character_name.type}
                                     name={character_name.name}
@@ -190,7 +190,7 @@ const Login = () => {
                                 />
                             </div>
                             <div>
-                                <label>DNDBeyond link to your character:{character_url.required && <span className="text-red bold">*</span>}</label>
+                                <label>DNDBeyond link to your character:{character_url.required && <span className="text-red bold large">*</span>}</label>
                                 <input
                                     type={character_url.type}
                                     name={character_url.name}

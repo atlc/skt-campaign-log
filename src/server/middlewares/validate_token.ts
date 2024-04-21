@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import tokens from "../utils/tokens";
+import random_messages from "../utils/random_messages";
 
 const validate_token: RequestHandler = (req, res, next) => {
     const auth_header = req.headers.authorization;
@@ -36,7 +37,7 @@ const validate_token: RequestHandler = (req, res, next) => {
         req.user = { ...user };
         next();
     } catch (error) {
-        next(error);
+        res.status(401).json({ message: (error as Error).message, title: random_messages.error() });
     }
 };
 
