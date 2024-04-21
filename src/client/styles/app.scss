@@ -1,19 +1,49 @@
-// Vaporwave Color Scheme
+body {
+    background-color: #262525;
+    background-image: url("/assets/bg.png");
+    background-size: auto;
+    background-repeat: repeat-y;
+    font-family: Roboto, Helvetica, sans-serif;
+}
 
-// Colors
-$body-bg: #0091ea;        // Bright Blue
-$primary: #ff6ad5;        // Neon Pink
-$secondary: #ffdb58;      // Bright Yellow
-$success: #00f764;        // Neon Green
-$info: #01cdfe;           // Bright Cyan
-$warning: #ff61a6;        // Pinkish
-$danger: #ff2965;         // Neon Red
-$light: #9A83D4;          // Pastel Purple
-$dark: #260e37;           // Dark Blueish Purple
+.btn {
+    margin-left: 1%;
+    margin-right: 1%;
+    padding: 5px;
+    border-radius: 5%;
+}
 
-// Link Colors
-$link-color: #01cdfe;     // Bright Cyan
-$link-hover-color: darken($link-color, 10%);
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    background-color: #090809;
+    padding: 1%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10px;
+    z-index: 5;
+}
 
-// Bootstrap Import
-@import '~bootstrap/scss/bootstrap.scss';
+nav > .nav-btn {
+    background-color: #252525;
+    color: white;
+    border: 2px solid #c53131;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.text-red {
+    color: #c53131;
+}
+
+.bg-red {
+    background-color: #c53131;
+}
+
+main {
+    background-color: rgba(37, 37, 37, 0.3);
+    padding: 2%;
+    backdrop-filter: blur(2px);
+}
