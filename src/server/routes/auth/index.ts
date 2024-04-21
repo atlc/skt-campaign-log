@@ -6,6 +6,7 @@ import validate_registration_data from "../../middlewares/register";
 import tokens from "../../utils/tokens";
 import validate_login from "../../middlewares/login";
 import random_messages from "../../utils/random_messages";
+import validate_token from "../../middlewares/validate_token";
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.post("/login", validate_login, async (req, res) => {
     const token = tokens.sign(payload);
 
     res.status(200).json({
-        message: "I guess your login credentials were not in the forgotten realms - you successfully logged in.",
+        message: "It seems your login credentials were not in the forgotten realms - you successfully logged in.",
         title: random_messages.success(),
         token,
     });
@@ -43,5 +44,7 @@ router.post("/register", validate_registration_data, async (req, res, next) => {
         next(error);
     }
 });
+
+router.get("/token_check", validate_token);
 
 export default router;
