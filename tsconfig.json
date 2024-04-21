@@ -1,15 +1,15 @@
 {
-	"compilerOptions": {
-		"sourceMap": true,
-		"target": "es2022",
-		"module": "commonjs",
-		"strict": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"rootDir": "./src",
-		"moduleResolution": "node",
-		"resolveJsonModule": true
-	},
-	"exclude": ["node_modules"]
+    "compilerOptions": {
+        "sourceMap": true,
+        "target": "es2022",
+        "module": "es2022",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "rootDir": "./src",
+        "moduleResolution": "node",
+        "resolveJsonModule": true
+    },
+    "exclude": ["node_modules"]
 }
