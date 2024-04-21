@@ -1,24 +1,26 @@
-import { Logs } from "../models";
+import { LogsModel } from "../models";
 import { client } from "../connection";
 import { v4 } from "uuid";
 
 const logs = client.db("Logs").collection("entries");
 
-async function createEntry({ user_id, content }: Logs.BaseLog) {
+async function createEntry({ user_id, content }: LogsModel.BaseLog) {
     const id = v4();
-    const results = await logs.insertOne({ id, user_id, content });
+    const created_at = new Date().toISOString();
+    const results = await logs.insertOne({ id, user_id, content, created_at });
     return { ...results, id };
 }
 
 async function retrieveEntries() {
-    return await logs.find<Logs.Log>({}).toArray();
+    return await logs.find<LogsModel.Log>({}).toArray();
 }
 
-async function updateComment({ id, user_id, content }: Logs.Log) {
-    return await logs.updateOne({ id, user_id }, { $set: { content } });
+async function updateComment({ id, user_id, content }: LogsModel.Log) {
+    const updated_at = new Date().toISOString();
+    return await logs.updateOne({ id, user_id }, { $set: { content, updated_at } });
 }
 
-async function deleteEntry({ id, user_id }: Logs.Log) {
+async function deleteEntry({ id, user_id }: LogsModel.Log) {
     return await logs.deleteOne({ id, user_id });
 }
 

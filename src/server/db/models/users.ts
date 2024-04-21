@@ -18,3 +18,11 @@ export interface Payload {
     name: string;
     character_name: string;
 }
+
+declare global {
+    namespace Express {
+        export interface Request {
+            user: Payload;
+        }
+    }
+}

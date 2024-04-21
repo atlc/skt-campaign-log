@@ -1,4 +1,4 @@
-export function validateRequiredStrings(obj: { [key: string]: { value: string; min: number; max: number } }) {
+export function validate_required_strings(obj: { [key: string]: { value: string; min: number; max: number } }) {
     let issues: string[] = [];
 
     Object.entries(obj).forEach(([key, { value, min, max }]) => {
@@ -18,8 +18,4 @@ export function validateRequiredStrings(obj: { [key: string]: { value: string; m
     });
 
     return issues.join(",\n");
-}
-
-function isString(value: any): value is string {
-    return typeof value === "string";
 }
