@@ -50,7 +50,6 @@ router.get("/profile", validate_token, async (req, res, next) => {
     try {
         const profile = await db.users.profile({ id });
         if (!profile) return res.status(401).json({ message: `Unable to find your profile - please try logging in again`, title: random_messages.error() });
-
         res.json(profile);
     } catch (error) {
         next(error);

@@ -6,30 +6,30 @@ const validate_token: RequestHandler = (req, res, next) => {
     const auth_header = req.headers.authorization;
 
     if (!auth_header) {
-        return next("Missing authentication headers");
+        return res.status(401).json({ message: "Missing authentication headers", title: random_messages.error() });
     }
 
     if (typeof auth_header !== "string") {
-        return next("Authentication headers were not a flattened string");
+        return res.status(401).json({ message: "Authentication headers were not a flattened string", title: random_messages.error() });
     }
 
     const [type, token] = auth_header.split(" ");
 
     if (!type || !token) {
-        return next("Malformed or missing header components");
+        return res.status(401).json({ message: "Malformed or missing header components", title: random_messages.error() });
     }
 
     if (type.toLocaleLowerCase() !== "bearer") {
-        return next("Incorrect token format");
+        return res.status(401).json({ message: "Incorrect token format", title: random_messages.error() });
     }
 
     const [header, payload, signature] = token.split(".");
     if (!header || !payload || !signature) {
-        return next("Malformed token");
+        return res.status(401).json({ message: "Malformed token", title: random_messages.error() });
     }
 
     if (header.substring(0, 2) !== "ey") {
-        return next("Not a JWT");
+        return res.status(401).json({ message: "Not a JWT", title: random_messages.error() });
     }
 
     try {

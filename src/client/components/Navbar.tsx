@@ -1,16 +1,39 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import useCheckAuth from "../hooks/useCheckAuth";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import LS from "../services/LS";
 
 const Navbar = () => {
     const nav = useNavigate();
-    const { hasChecked, isLoggedIn } = useCheckAuth();
+    const { pathname } = useLocation();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [hasChecked, setHasChecked] = useState(false);
 
     const handle_logout = () => {
         LS.token.set("");
         nav("/login");
+        setIsLoggedIn(false);
     };
+
+    useEffect(() => {
+        const token = LS.token.get();
+
+        if (!token) {
+            setHasChecked(true);
+            setIsLoggedIn(false);
+            return;
+        }
+
+        fetch(process.env.SERVER_URL + "/auth/token_check", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => {
+                setIsLoggedIn(res.ok);
+            })
+            .catch(() => setIsLoggedIn(false))
+            .finally(() => setHasChecked(true));
+    }, [pathname]);
 
     return (
         <nav>

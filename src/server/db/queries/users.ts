@@ -4,6 +4,11 @@ import { v4 } from "uuid";
 
 const users = client.db("Logs").collection("users");
 
+async function add_image({ character_image_url, id }: { character_image_url: string; id: string }) {
+    const updated_at = new Date().toISOString();
+    return await users.updateOne({ id }, { $set: { character_image_url, updated_at } });
+}
+
 async function find({ email }: { email: string }) {
     return await users.findOne<UsersModel.User>({ email });
 }
@@ -20,6 +25,7 @@ async function register(new_user: UsersModel.BaseUser) {
 }
 
 export default {
+    add_image,
     find,
     profile,
     register,
