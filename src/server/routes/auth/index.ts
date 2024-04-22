@@ -56,6 +56,15 @@ router.get("/profile", validate_token, async (req, res, next) => {
     }
 });
 
+router.get("/users", validate_token, async (req, res, next) => {
+    try {
+        const users = await db.users.get();
+        res.json(users);
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.get("/token_check", validate_token, async (req, res) => res.status(200).json({ message: "All's gucci", title: random_messages.success() }));
 
 export default router;

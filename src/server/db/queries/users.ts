@@ -13,6 +13,10 @@ async function find({ email }: { email: string }) {
     return await users.findOne<UsersModel.User>({ email });
 }
 
+async function get() {
+    return await users.find<UsersModel.User>({}, { projection: { email: 0, password: 0 } }).toArray();
+}
+
 async function profile({ id }: { id: string }) {
     return await users.findOne<UsersModel.User>({ id }, { projection: { password: 0 } });
 }
@@ -27,6 +31,7 @@ async function register(new_user: UsersModel.BaseUser) {
 export default {
     add_image,
     find,
+    get,
     profile,
     register,
 };

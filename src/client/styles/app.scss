@@ -105,6 +105,10 @@ label {
     font-size: 1.25rem;
 }
 
+.xl {
+    font-size: 1.5rem;
+}
+
 input {
     display: block;
     width: 90%;
@@ -118,4 +122,36 @@ input {
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     margin-bottom: 0.5rem;
+}
+
+.chat {
+    width: 100%;
+    background-color: #ffffff7c;
+    font-size: x-large;
+    border-radius: 0.25rem;
+    border: 1px solid #c53131;
+    font-family: Roboto, Helvetica, sans-serif;
+}
+
+.avatar {
+    display: flex;
+    border: 2px solid #252525;
+    border-radius: 50%;
+    height: 80px;
+}
+
+.log {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 0.25rem;
+    border: 1px solid #c53131;
+    background-color: #ffffff7c;
+    font-size: large;
+    font-family: Roboto, Helvetica, sans-serif;
+}
+
+.muted {
+    color: #484848;
+    font-size: medium;
 }

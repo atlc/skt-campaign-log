@@ -12,15 +12,15 @@ async function createEntry({ user_id, content }: LogsModel.BaseLog) {
 }
 
 async function retrieveEntries() {
-    return await logs.find<LogsModel.Log>({}).toArray();
+    return (await logs.find<LogsModel.Log>({}).toArray()).reverse();
 }
 
-async function updateComment({ id, user_id, content }: LogsModel.Log) {
+async function updateComment({ id, user_id, content }: Partial<LogsModel.Log>) {
     const updated_at = new Date().toISOString();
     return await logs.updateOne({ id, user_id }, { $set: { content, updated_at } });
 }
 
-async function deleteEntry({ id, user_id }: LogsModel.Log) {
+async function deleteEntry({ id, user_id }: Partial<LogsModel.Log>) {
     return await logs.deleteOne({ id, user_id });
 }
 
