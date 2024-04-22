@@ -12,7 +12,9 @@ const Home = () => {
 
     useEffect(() => {
         get_logs();
-        const ws = new WebSocket(process.env.SERVER_URL!.replace("http", "ws"));
+
+        const ws_url = process.env.SERVER_URL ? process.env.SERVER_URL.replace("http", "wss") : window.location.href.replace(/https?/g, "wss");
+        const ws = new WebSocket(ws_url);
         setSocket(ws);
 
         ws.onmessage = (event) => {
