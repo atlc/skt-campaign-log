@@ -29,7 +29,7 @@ const Entry = ({ user_id, id, content, created_at, updated_at, user }: Log) => {
             <div className="col">
                 <div className="log">
                     <img className="avatar" style={{ marginLeft: isAuthor ? "auto" : "" }} src={user.character_image_url || "/assets/favicon.png"} />
-                    <p>{content}</p>
+                    {content.split('\n').map(pg => <p>{pg}</p>)}
                     <p className="muted">
                         {updated_at ? `Last updated at ${new Date(updated_at).toLocaleString()}` : `Created at ${new Date(created_at).toLocaleString()}`}, by{" "}
                         {user.character_name}
