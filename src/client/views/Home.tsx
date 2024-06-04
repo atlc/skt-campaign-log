@@ -5,10 +5,25 @@ import Entry from "../components/Chat/Entry";
 import { Log } from "../types";
 
 const Home = () => {
-    const [logs, setLogs] = useState<Log[]>([]);
+    const [logChunks, setLogChunks] = useState<{ [key: string]: Log[] }>({});
     const [socket, setSocket] = useState<WebSocket>();
 
-    const get_logs = () => GET("/api/logs").then(setLogs);
+    const get_logs = () =>
+        GET<Log[]>("/api/logs").then((logs) => {
+            const chunks = {} as { [key: string]: Log[] };
+
+            logs.forEach((log) => {
+                const day = new Date(log.created_at);
+                const day_string = day.toLocaleDateString();
+                if (!chunks[day_string]) {
+                    chunks[day_string] = [log];
+                } else {
+                    chunks[day_string] = [log, ...chunks[day_string]];
+                }
+            });
+
+            setLogChunks(chunks);
+        });
 
     useEffect(() => {
         get_logs();
@@ -18,8 +33,7 @@ const Home = () => {
         setSocket(ws);
 
         ws.onmessage = (event) => {
-            const updated_logs = JSON.parse(event.data);
-            setLogs(updated_logs);
+            get_logs();
         };
 
         return () => {
@@ -32,8 +46,20 @@ const Home = () => {
             <div className="row">
                 <ChatInput />
             </div>
-            {logs.map((log) => (
-                <Entry key={log.id} {...log} />
+            {Object.keys(logChunks).map((chunk) => (
+                <div style={{ border: "1px solid #c53131", marginTop: "30px", padding: "10px" }}>
+                    <h1 style={{ textAlign: "center" }}>
+                        <span className="log" style={{ fontSize: "2rem" }}>
+                            {chunk}
+                        </span>
+                    </h1>
+                    <hr style={{ color: "#c53131", marginLeft: "20vw", marginRight: "20vw" }} />
+                    <div style={{ maxHeight: "50vh", overflowY: "auto" }}>
+                        {logChunks[chunk].map((log) => (
+                            <Entry key={log.id} {...log} />
+                        ))}
+                    </div>
+                </div>
             ))}
         </div>
     );
