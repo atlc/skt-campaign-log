@@ -13,14 +13,13 @@ const app = express();
 
 app.use(express.json());
 
-if (is_development) {
-    app.use(cors());
-}
+app.use(cors());
 
 if (is_production) {
     app.use(express.static("public"));
 }
 
+app.get("/api/health", (req, res) => res.status(200).json({ message: "All good!" }));
 app.use(indexRouter);
 
 app.use(["/api/*", "/auth/*"], unsupported_route);
