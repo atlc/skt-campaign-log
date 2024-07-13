@@ -8,7 +8,7 @@ const Home = () => {
     const [logChunks, setLogChunks] = useState<{ [key: string]: Log[] }>({});
     const [socket, setSocket] = useState<WebSocket>();
 
-    const get_logs = () =>
+    const get_logs = () => {
         GET<Log[]>("/api/logs").then((logs) => {
             const chunks = {} as { [key: string]: Log[] };
 
@@ -24,6 +24,7 @@ const Home = () => {
 
             setLogChunks(chunks);
         });
+    };
 
     useEffect(() => {
         get_logs();
@@ -41,6 +42,18 @@ const Home = () => {
         };
     }, []);
 
+    const getDateStampAndCampaign = (dateChunk: string) => {
+        const dayOfWeek = new Date(dateChunk).getDay();
+
+        const isStormKingsThunder = dayOfWeek === 1 || dayOfWeek === 2;
+        const isCurseOfStrahd = dayOfWeek === 4 || dayOfWeek === 5;
+
+        if (isStormKingsThunder) return `${dateChunk} - Storm King's Thunder`;
+        if (isCurseOfStrahd) return `${dateChunk} - Curse of Strahd`;
+
+        return dateChunk;
+    };
+
     return (
         <div>
             <div className="row">
@@ -49,14 +62,20 @@ const Home = () => {
             {Object.keys(logChunks).map((chunk) => (
                 <div style={{ border: "1px solid #c53131", marginTop: "30px", padding: "10px" }}>
                     <h1 style={{ textAlign: "center" }}>
-                        <span className="log" style={{ fontSize: "2rem" }}>
-                            {chunk}
+                        <span
+                            className="log"
+                            style={{ fontSize: "2rem" }}
+                        >
+                            {getDateStampAndCampaign(chunk)}
                         </span>
                     </h1>
                     <hr style={{ color: "#c53131", marginLeft: "20vw", marginRight: "20vw" }} />
                     <div style={{ maxHeight: "50vh", overflowY: "auto" }}>
                         {logChunks[chunk].map((log) => (
-                            <Entry key={log.id} {...log} />
+                            <Entry
+                                key={log.id}
+                                {...log}
+                            />
                         ))}
                     </div>
                 </div>

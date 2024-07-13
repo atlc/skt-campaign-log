@@ -6,6 +6,8 @@ import random_messages from "../../utils/random_messages";
 
 const router = express.Router();
 
+const MAX_LOG_LENGTH = 2048;
+
 async function send_updated_logs() {
     try {
         const logs = await db.logs.get();
@@ -40,8 +42,8 @@ router.post("/", async (req, res, next) => {
     const { content } = req.body;
     const user_id = req.user.id;
 
-    if (!content || typeof content !== "string" || content.length > 1024) {
-        return res.status(400).json({ message: "Content of the message must be between 1 and 1024 characters", title: random_messages.error() });
+    if (!content || typeof content !== "string" || content.length > MAX_LOG_LENGTH) {
+        return res.status(400).json({ message: `Content of the message must be between 1 and ${MAX_LOG_LENGTH} characters`, title: random_messages.error() });
     }
 
     try {
@@ -58,8 +60,8 @@ router.put("/:id", async (req, res, next) => {
     const { content } = req.body;
     const user_id = req.user.id;
 
-    if (!content || typeof content !== "string" || content.length > 1024) {
-        return res.status(400).json({ message: "Content of the message must be between 1 and 1024 characters", title: random_messages.error() });
+    if (!content || typeof content !== "string" || content.length > MAX_LOG_LENGTH) {
+        return res.status(400).json({ message: `Content of the message must be between 1 and ${MAX_LOG_LENGTH} characters`, title: random_messages.error() });
     }
 
     try {
